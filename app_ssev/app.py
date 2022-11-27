@@ -2,17 +2,14 @@ import os
 from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
+from flask import Flask
+
 # from utils.MONGO import CONEXION
 # from utils.UTILS import *
 # from datetime import datetime
 
-debug = False if os.environ["DASH_DEBUG_MODE"] == "False" else True
-
-#app = Dash(__name__)
-
-#server = app.server
-
-from flask import Flask
+debug = True
+port = os.environ["PORT"]
 
 server = Flask(__name__)
 app = Dash(__name__, server=server)
@@ -40,4 +37,4 @@ app.layout = html.Div(
 
 
 if __name__ == "__main__":
-    app.run_server(host="0.0.0.0", port= 8000, debug=debug)
+    app.run_server(host="0.0.0.0", port=port, debug=debug)
