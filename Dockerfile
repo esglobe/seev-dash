@@ -12,4 +12,5 @@ RUN set -ex \
 
 EXPOSE 8000
 
-ENTRYPOINT gunicorn --conf /app-run/server_conf.py index:server --reload
+#ENTRYPOINT gunicorn --conf /app-run/server_conf.py index:server --reload
+CMD ["gunicorn", "--conf", "/app-run/server_conf.py","-b", "0.0.0.0:8000", "--reload", "index:server"]
