@@ -1,4 +1,7 @@
-bind = '0.0.0.0:8000'
+import os
+
+port = os.environ["PORT"]
+bind = f'0.0.0.0:{port}'
 workers = 4
 worker_class = 'gevent'
 worker_connections = 1000
