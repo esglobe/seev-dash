@@ -1,48 +1,124 @@
 import os
+import dash
 from dash import Dash, html, dcc
 import plotly.express as px
-import pandas as pd
 from flask import Flask
-
-from utils.MONGO import CONEXION
-from datetime import datetime
 
 debug = True
 port = os.environ["PORT"]
 
 # Server/app
 server = Flask(__name__)
-app = Dash(__name__, server=server)
+app = Dash(__name__,
+          server=server,
+          meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+          use_pages=True
+          )
 
-# Creando la conexión con MongoDB
-db = CONEXION.conexion()
-db.list_collection_names()
-
-# Fecha actual
-time = datetime.today().toordinal()
-
-# Realizando consulta
-sst_data = db.SSTNino34.find({"time":{"$lte":time}})
-
-# Generando pandas dataframe
-data_pandas = pd.DataFrame([file for file in sst_data])
-data_pandas['periodo'] = data_pandas.time.apply(lambda x: datetime.fromordinal(x))
-data_pandas['mes_year'] =  data_pandas['periodo'].dt.strftime('%B-%Y')
-data_pandas.index = pd.to_datetime(data_pandas.periodo)
+app.layout = html.Div([
 
 
-# grafico
-graph = px.line(data_pandas, x="periodo", y="nino34_mean")
 
-app.layout = html.Div(
-    children=[
-        html.H1(
-            children=f"Hello Dash in 2022 from {'Dev Server' if debug else 'Prod Server'}"
-        ),
-        html.Div(children="""Dash: A web application framework for your data."""),
-        dcc.Graph(id="example-graph", figure=graph),
-    ]
-)
+	html.H1('Multi-page app with Dash Pages'),
+
+    html.Div(
+        [
+            html.Div(
+                dcc.Link(
+                    f"{page['name']} - {page['path']}", href=page["relative_path"]
+                )
+            )
+            for page in dash.page_registry.values()
+        ]
+    ),
+
+	dash.page_container
+])
+
+#https://github.com/plotly/dash-sample-apps/blob/main/apps/dash-brain-viewer/app.py
+# app.layout = html.Div(
+#     [
+#         html.Div(
+#             [
+#                 html.Div(
+#                     [
+#                         html.Div(
+#                             [
+#                                 html.Div(
+#                                     [
+#                                         html.H1('div 1')
+#                                     ],
+#                                     className="header__title",
+#                                 ),
+#                                 html.Div(
+#                                     [
+#                                         html.H1('div 2')
+#                                     ],
+#                                     className="header__info pb-20",
+#                                 ),
+#                                 html.Div(
+#                                     [
+#                                         html.H1('div 3')
+#                                     ],
+#                                     className="header__button",
+#                                 ),
+#                             ],
+#                             className="header pb-20",
+#                         ),
+#                         html.Div(
+#                             [
+#                                 html.H1('div 4')
+#                             ],
+#                             className="graph__container",
+#                         ),
+#                     ],
+#                     className="container",
+#                 )
+#             ],
+#             className="two-thirds column app__left__section",
+#         ),
+#         html.Div(
+#             [
+#                 html.Div(
+#                     [
+#                         html.Div(
+#                             [
+#                                 html.H1('div 5')
+#                             ]
+#                         )
+#                     ],
+#                     className="colorscale pb-20",
+#                 ),
+#                 html.Div(
+#                     [
+#                         html.H1('div 6')
+#                     ],
+#                     className="pb-20",
+#                 ),
+#                 html.Div(
+#                     [
+#                         html.H1('div 7')
+#                     ],
+#                     className="pb-20",
+#                 ),
+#                 html.Div(
+#                     [
+#                         html.H1('div 8')
+#                     ],
+#                     className="pb-20",
+#                 ),
+#                 html.Div(
+#                     [
+#                         html.H1('div 9'),
+#                         dash.page_container
+#                     ]
+#                 ),
+#             ],
+#             className="one-third column app__right__section",
+#         ),
+#         dcc.Store(id="annotation_storage"),
+#     ]
+# )
 
 
 if __name__ == "__main__":
