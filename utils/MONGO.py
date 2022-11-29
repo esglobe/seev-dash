@@ -1,14 +1,6 @@
 # PROYECTO: SISTEMA PARA EL SEGUIMIENTO DE ECOSISTEMAS VENEZOLANOS
 # AUTOR: Javier Martinez
-
-import yaml 
 import os
-
-# Definiendo variables
-# with open('./config.yml') as stream:
-#     config = yaml.safe_load(stream)
-
-print(os.environ['MONGO_USER'])
 
 # Objeto para la conexión
 class CONEXION:
