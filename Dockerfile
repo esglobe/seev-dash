@@ -8,4 +8,4 @@ RUN set -ex \
     && pip install --upgrade pip \
     && pip install -r ./requirements.txt
 
-CMD ["gunicorn", "--conf", "/app-run/server_conf.py", "--reload", "index:server"]
+CMD exec gunicorn --conf /app-run/server_conf.py index:server --reload

@@ -1,11 +1,14 @@
-version: '2'
+version: '3'
 services:
   ms-ds-ssev:
     container_name: ms-ds-ssev
     restart: always
-    build: .
+    build:
+      context: .
+      args:
+        options: --reload
     env_file: .env
     volumes:
-      - .:/app
+      - ./:/app
     ports:
       - "8000:8000"
