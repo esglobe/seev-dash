@@ -7,7 +7,11 @@ import pandas as pd
 from utils.MONGO import CONEXION
 from datetime import datetime
 
-dash.register_page(__name__)
+dash.register_page(
+    __name__,
+    name='ONI',
+    path='/oni'
+)
 
 # Creando la conexión con MongoDB
 db = CONEXION.conexion()

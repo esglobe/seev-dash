@@ -1,5 +1,7 @@
 FROM python:3.10
 
+ENV GITHUB_LINK=https://github.com/esglobe/seev-dash
+
 COPY . /app-run
 
 WORKDIR /app-run

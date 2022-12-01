@@ -11,114 +11,52 @@ port = os.environ["PORT"]
 server = Flask(__name__)
 app = Dash(__name__,
           server=server,
-          meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
           use_pages=True
           )
+          
+app.title = 'SSEV'
+#github_link = os.environ["GITHUB_LINK"]
 
+#------------------------------
 app.layout = html.Div([
 
+    #--
+    html.Div([
+        html.Div([
+            html.Img(src=app.get_asset_url("ssev-logo.png"))
+            ],className="imag__header__title")
+        ],className="header__title"),
+        
+    #--
+    html.Div([
+        html.H2('SSEV'),
+        html.H3('Sistema para el Seguimiento de Ecosistemas Venezolanos')
+        ],className="header__info"),
 
+    #--
+    html.Div([
+        html.H3('Contenido:'),
+        html.Div([
+                html.Div([dcc.Link(f"{dash.page_registry['pages.home']['name']}",
+                                href=dash.page_registry['pages.home']["relative_path"])]),
+                html.Div([dcc.Link(f"{dash.page_registry['pages.oni']['name']}",
+                                href=dash.page_registry['pages.oni']["relative_path"])]),
+                html.Div([dcc.Link(f"{dash.page_registry['pages.park']['name']}",
+                                href=dash.page_registry['pages.park']["relative_path"])])
+                ]),
+        ],className="left_panel"),
+    
+    #--
+    html.Div([
+        dash.page_container
+        ],className="right_panel")
 
-	html.H1('Multi-page app with Dash Pages'),
+],className="wrapper")
+#------------------------------
 
-    html.Div(
-        [
-            html.Div(
-                dcc.Link(
-                    f"{page['name']} - {page['path']}", href=page["relative_path"]
-                )
-            )
-            for page in dash.page_registry.values()
-        ]
-    ),
-
-	dash.page_container
-])
 
 #https://github.com/plotly/dash-sample-apps/blob/main/apps/dash-brain-viewer/app.py
-# app.layout = html.Div(
-#     [
-#         html.Div(
-#             [
-#                 html.Div(
-#                     [
-#                         html.Div(
-#                             [
-#                                 html.Div(
-#                                     [
-#                                         html.H1('div 1')
-#                                     ],
-#                                     className="header__title",
-#                                 ),
-#                                 html.Div(
-#                                     [
-#                                         html.H1('div 2')
-#                                     ],
-#                                     className="header__info pb-20",
-#                                 ),
-#                                 html.Div(
-#                                     [
-#                                         html.H1('div 3')
-#                                     ],
-#                                     className="header__button",
-#                                 ),
-#                             ],
-#                             className="header pb-20",
-#                         ),
-#                         html.Div(
-#                             [
-#                                 html.H1('div 4')
-#                             ],
-#                             className="graph__container",
-#                         ),
-#                     ],
-#                     className="container",
-#                 )
-#             ],
-#             className="two-thirds column app__left__section",
-#         ),
-#         html.Div(
-#             [
-#                 html.Div(
-#                     [
-#                         html.Div(
-#                             [
-#                                 html.H1('div 5')
-#                             ]
-#                         )
-#                     ],
-#                     className="colorscale pb-20",
-#                 ),
-#                 html.Div(
-#                     [
-#                         html.H1('div 6')
-#                     ],
-#                     className="pb-20",
-#                 ),
-#                 html.Div(
-#                     [
-#                         html.H1('div 7')
-#                     ],
-#                     className="pb-20",
-#                 ),
-#                 html.Div(
-#                     [
-#                         html.H1('div 8')
-#                     ],
-#                     className="pb-20",
-#                 ),
-#                 html.Div(
-#                     [
-#                         html.H1('div 9'),
-#                         dash.page_container
-#                     ]
-#                 ),
-#             ],
-#             className="one-third column app__right__section",
-#         ),
-#         dcc.Store(id="annotation_storage"),
-#     ]
-# )
+#https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Introduction
 
 
 if __name__ == "__main__":

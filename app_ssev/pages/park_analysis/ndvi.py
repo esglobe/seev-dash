@@ -3,9 +3,8 @@ from dash import html, dcc
 
 dash.register_page(
     __name__,
-    name='Home',
-    path='/',
-    order=0
+    name='NDVI',
+    path='/NDVI',
     #title='Custom Page Title', description='Custom Page Description', image='logo.png'
 )
 
