@@ -29,3 +29,11 @@
     grid-row: 2;
     grid-column: 2;
 }
+
+.imag__usb{
+    max-width:70%;
+  }
+
+.imag__header__title{
+    max-width:70%;
+  }

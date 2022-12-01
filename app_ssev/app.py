@@ -15,16 +15,18 @@ app = Dash(__name__,
           )
           
 app.title = 'SSEV'
-#github_link = os.environ["GITHUB_LINK"]
 
 #------------------------------
 app.layout = html.Div([
 
     #--
     html.Div([
-        html.Div([
-            html.Img(src=app.get_asset_url("ssev-logo.png"))
-            ],className="imag__header__title")
+        html.A(href=dash.page_registry['pages.home']["relative_path"],
+                children=[
+                    html.Img(src=app.get_asset_url("ssev-logo.png"),
+                             className="imag__header__title")
+                    ]
+        )
         ],className="header__title"),
         
     #--
@@ -42,9 +44,37 @@ app.layout = html.Div([
                 html.Div([dcc.Link(f"{dash.page_registry['pages.oni']['name']}",
                                 href=dash.page_registry['pages.oni']["relative_path"])]),
                 html.Div([dcc.Link(f"{dash.page_registry['pages.park']['name']}",
-                                href=dash.page_registry['pages.park']["relative_path"])])
+                                href=dash.page_registry['pages.park']["relative_path"])]),
+                html.Br(),
+                html.H4('Autor:'),
+                html.Div([
+                    html.A("Javier Martínez",
+                            href=os.environ["ESGLONBE_LINK"],
+                            target="_blank",
+                        )],className="esglobe__button"),
+                html.Br(),
+                html.H4('Tutor:'),
+                html.Div([
+                    html.A("Isabel Llatas",
+                            href=os.environ["ISABEL_LINK"],
+                            target="_blank",
+                        )],className="isabel__button"),
+                            
                 ]),
-        ],className="left_panel"),
+                html.Br(),
+                html.Br(),
+                html.Div([
+                    html.A(href='http://www.usb.ve/',
+                           children=[
+                            html.Img(src=app.get_asset_url("usb.png"),
+                                     className="imag__usb")
+                                ]
+                    )
+
+                    ])
+                
+
+                ],className="left_panel"),
     
     #--
     html.Div([

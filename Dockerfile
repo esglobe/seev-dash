@@ -1,6 +1,8 @@
 FROM python:3.10
 
 ENV GITHUB_LINK=https://github.com/esglobe/seev-dash
+ENV ESGLONBE_LINK=https://esglobe.github.io/
+ENV ISABEL_LINK=https://www.linkedin.com/in/isabel-llatas-b103911/
 
 COPY . /app-run
 
