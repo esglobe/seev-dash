@@ -1,48 +1,92 @@
 import os
+import dash
 from dash import Dash, html, dcc
 import plotly.express as px
-import pandas as pd
 from flask import Flask
-
-from utils.MONGO import CONEXION
-from datetime import datetime
 
 debug = True
 port = os.environ["PORT"]
 
 # Server/app
 server = Flask(__name__)
-app = Dash(__name__, server=server)
+app = Dash(__name__,
+          server=server,
+          use_pages=True
+          )
+          
+app.title = 'SSEV'
 
-# Creando la conexión con MongoDB
-db = CONEXION.conexion()
-db.list_collection_names()
+#------------------------------
+app.layout = html.Div([
 
-# Fecha actual
-time = datetime.today().toordinal()
+    #--
+    html.Div([
+        html.A(href=dash.page_registry['pages.home']["relative_path"],
+                children=[
+                    html.Img(src=app.get_asset_url("ssev-logo.png"),
+                             className="imag__header__title")
+                    ]
+        )
+        ],className="header__title"),
+        
+    #--
+    html.Div([
+        html.H2('SSEV'),
+        html.H3('Sistema para el Seguimiento de Ecosistemas Venezolanos')
+        ],className="header__info"),
 
-# Realizando consulta
-sst_data = db.SSTNino34.find({"time":{"$lte":time}})
+    #--
+    html.Div([
+        html.H3('Contenido:'),
+        html.Div([
+                html.Div([dcc.Link(f"{dash.page_registry['pages.home']['name']}",
+                                href=dash.page_registry['pages.home']["relative_path"])]),
+                html.Div([dcc.Link(f"{dash.page_registry['pages.oni']['name']}",
+                                href=dash.page_registry['pages.oni']["relative_path"])]),
+                html.Div([dcc.Link(f"{dash.page_registry['pages.park']['name']}",
+                                href=dash.page_registry['pages.park']["relative_path"])]),
+                html.Br(),
+                html.H4('Autor:'),
+                html.Div([
+                    html.A("Javier Martínez",
+                            href=os.environ["ESGLONBE_LINK"],
+                            target="_blank",
+                        )],className="esglobe__button"),
+                html.Br(),
+                html.H4('Tutor:'),
+                html.Div([
+                    html.A("Isabel Llatas",
+                            href=os.environ["ISABEL_LINK"],
+                            target="_blank",
+                        )],className="isabel__button"),
+                            
+                ]),
+                html.Br(),
+                html.Br(),
+                html.Div([
+                    html.A(href='http://www.usb.ve/',
+                           children=[
+                            html.Img(src=app.get_asset_url("usb.png"),
+                                     className="imag__usb")
+                                ]
+                    )
 
-# Generando pandas dataframe
-data_pandas = pd.DataFrame([file for file in sst_data])
-data_pandas['periodo'] = data_pandas.time.apply(lambda x: datetime.fromordinal(x))
-data_pandas['mes_year'] =  data_pandas['periodo'].dt.strftime('%B-%Y')
-data_pandas.index = pd.to_datetime(data_pandas.periodo)
+                    ])
+                
+
+                ],className="left_panel"),
+    
+    #--
+    html.Div([
+        dash.page_container
+        ],className="right_panel")
+
+],className="wrapper")
+#------------------------------
 
 
-# grafico
-graph = px.line(data_pandas, x="periodo", y="nino34_mean")
-
-app.layout = html.Div(
-    children=[
-        html.H1(
-            children=f"Hello Dash in 2022 from {'Dev Server' if debug else 'Prod Server'}"
-        ),
-        html.Div(children="""Dash: A web application framework for your data."""),
-        dcc.Graph(id="example-graph", figure=graph),
-    ]
-)
+#https://github.com/plotly/dash-sample-apps/blob/main/apps/dash-brain-viewer/app.py
+#https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Introduction
 
 
 if __name__ == "__main__":
