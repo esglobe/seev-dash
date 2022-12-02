@@ -1,4 +1,13 @@
+body {
+    font-weight: 300;
+    font-family: "Roboto Condensed", sans-serif;
+    background-color:#FFFFFF;
+ }
+
 .wrapper {
+    width: 90%;
+    max-width: 75em;
+    margin: 1.25rem auto;
     display: grid;
     grid-template-columns: 10% 90%;
     grid-template-rows: 70px 700px;
@@ -37,3 +46,46 @@
 .imag__header__title{
     max-width:70%;
   }
+
+
+.btn-gruo-oni button {
+    background-color: #fbfbfb; /* Green background */
+    border: 1px solid rgb(231, 231, 231); /* Green border */
+    /*color: rgb(0, 0, 0); /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    width:33.3%;
+}
+
+/* Clear floats (clearfix hack) */
+.btn-gruo-oni:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-gruo-oni:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-gruo-oni:hover {
+    background-color: #fbfbfb;
+}
+
+
+/* Larger than mobile */
+@media (min-width: 400px) {}
+
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 550px) {}
+
+/* Larger than tablet */
+@media (min-width: 750px) {}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}
