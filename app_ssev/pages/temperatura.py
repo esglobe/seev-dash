@@ -7,8 +7,7 @@ from utils.TEMPERATURA import *
 dash.register_page(
     __name__,
     name='Temperatura',
-    path='/Temperatura',
-    image='ssev-logo.png'
+    path='/Temperatura'
 )
 
 # Data temperatura
