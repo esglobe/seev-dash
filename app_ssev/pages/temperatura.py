@@ -11,7 +11,6 @@ dash.register_page(
     image='ssev-logo.png'
 )
 
-
 # Data temperatura
 temperatura = TEMPERATURA()
 temperatura.get_data()
@@ -45,8 +44,8 @@ layout = html.Div([
 )
 def displayClick(btn1, btn2, btn3):
 
-    height=800
-    width=1500
+    height=750
+    width=1150
 
     if "btn-nclicks-1" == ctx.triggered_id:
 
@@ -60,4 +59,8 @@ def displayClick(btn1, btn2, btn3):
 
     elif "btn-nclicks-3" == ctx.triggered_id:
         graph = temperatura.temperatura_oni(height=height, width=width)
+        return dcc.Graph(id="example-graph", figure=graph)
+    
+    else:
+        graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
         return dcc.Graph(id="example-graph", figure=graph)

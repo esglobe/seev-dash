@@ -6,7 +6,8 @@ from plotly.graph_objects import Layout
 
 from utils.MONGO import CONEXION
 
-class TEMPERATURA:
+
+class TEMPERATURA: 
     """
     Clase para graficos del panel de temperatura
     """

@@ -19,5 +19,5 @@ class CONEXION:
       conn_str = f"mongodb+srv://{CONEXION.username}:{CONEXION.password}@{CONEXION.cluster}.wsg1gnp.mongodb.net/?retryWrites=true&w=majority"
       cliente = pymongo.MongoClient(conn_str, serverSelectionTimeoutMS=5000)
 
-      return cliente['SSEV']
+      return cliente
 
