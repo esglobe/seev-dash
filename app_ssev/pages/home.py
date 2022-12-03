@@ -28,7 +28,7 @@ layout = html.Div(children=[
             grado académico de Doctor en Ingeniería. Se espera que los 
             desarrollos teóricos-tecnológicos sean de utilidad en las 
             futuras investigaciones.
-        '''),
+            '''),
     html.Br(),
     html.Div([
         html.A("View on GitHub",
@@ -36,14 +36,7 @@ layout = html.Div(children=[
                 target="_blank",
             )],
             className="github__button",
-            ),
-    html.Br(),
-    html.Div([
-        html.A("Javier Martínez",
-                href=os.environ["ESGLONBE_LINK"],
-                target="_blank",
-            )],
-            className="esglobe__button",
             )
+
 
 ],className="wrapper__home")

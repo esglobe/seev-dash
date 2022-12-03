@@ -32,28 +32,29 @@ app.layout = html.Div([
     #--
     html.Div([
         html.H2('SSEV'),
-        html.H3('Sistema para el Seguimiento de Ecosistemas Venezolanos')
+        html.H3('Sistema para el Seguimiento de Ecosistemas Venezolanos'),
+        html.Br()
         ],className="header__info"),
 
     #--
     html.Div([
-        html.H3('Contenido:'),
+        html.H4('Contenido:'),
         html.Div([
                 html.Div([dcc.Link(f"{dash.page_registry['pages.home']['name']}",
                                 href=dash.page_registry['pages.home']["relative_path"])]),
-                html.Div([dcc.Link(f"{dash.page_registry['pages.oni']['name']}",
-                                href=dash.page_registry['pages.oni']["relative_path"])]),
+                html.Div([dcc.Link(f"{dash.page_registry['pages.temperatura']['name']}",
+                                href=dash.page_registry['pages.temperatura']["relative_path"])]),
                 html.Div([dcc.Link(f"{dash.page_registry['pages.park']['name']}",
                                 href=dash.page_registry['pages.park']["relative_path"])]),
                 html.Br(),
-                html.H4('Autor:'),
+                html.H5('Autor:'),
                 html.Div([
                     html.A("Javier Martínez",
                             href=os.environ["ESGLONBE_LINK"],
                             target="_blank",
                         )],className="esglobe__button"),
                 html.Br(),
-                html.H4('Tutor:'),
+                html.H5('Tutor:'),
                 html.Div([
                     html.A("Isabel Llatas",
                             href=os.environ["ISABEL_LINK"],
@@ -87,6 +88,7 @@ app.layout = html.Div([
 
 #https://github.com/plotly/dash-sample-apps/blob/main/apps/dash-brain-viewer/app.py
 #https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Introduction
+#https://plotly.com/python/custom-buttons/
 
 
 if __name__ == "__main__":
