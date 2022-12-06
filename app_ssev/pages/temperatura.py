@@ -43,8 +43,8 @@ layout = html.Div([
 )
 def displayClick(btn1, btn2, btn3):
 
-    height=750
-    width=1150
+    height=700
+    width=1200
 
     if "btn-nclicks-1" == ctx.triggered_id:
 

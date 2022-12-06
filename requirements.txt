@@ -9,3 +9,14 @@ gunicorn==20.1.0
 PyYAML==6.0
 gevent==22.10.2
 pymongo[gssapi,aws,ocsp,snappy,srv,zstd,encryption]==4.2.0
+numpy==1.22.4
+geopandas==0.10.2
+pyproj==3.3.0
+shapely==1.8.2
+cdsapi==0.5.1
+rioxarray==0.11.1
+xarray==0.20.1
+cftime==1.5.1.1
+ecmwflibs==0.5.0
+eccodes==1.5.0
+cfgrib==0.9.10.1
