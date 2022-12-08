@@ -347,18 +347,18 @@ class PARK_METEOROLOGICAL:
         Funcion para la grafica precipitacion y ndvi temporal
         """
 
-        data_temperatura = self.data_pandas.copy()
+        data_temperatura = self.data_pandas\
+                            .sort_index()\
+                            .copy()
 
         pd_training = data_temperatura\
                         .query("type!='prediction'")\
-                        .query(f"id_point == {id_point}")\
-                        .sort_index()[[serie]].dropna().round(2)
+                        .sort_index()[[serie,'id_point']]\
+                        .dropna()
         pd_forecast = data_temperatura\
                         .query("type=='prediction'")\
-                        .query(f"id_point == {id_point}")\
-                        .sort_index()[[serie]].dropna().round(2)
-
-
+                        .sort_index()[[serie,'id_point']]\
+                        .dropna()
 
         if serie == 'precipitacion_app':
             name_serie = 'Precipitación total (mm)'
@@ -370,6 +370,7 @@ class PARK_METEOROLOGICAL:
             marker_symbol='star'
             marker_line_color='#0099E5'
             marker_color='#0099E5'
+            id_poins = self.id_poin_preci
 
         if serie == 'ndvi_app':
             name_serie = 'NDVI'
@@ -381,32 +382,54 @@ class PARK_METEOROLOGICAL:
             marker_symbol='star'
             marker_line_color='#1EBD72'
             marker_color='#1EBD72'
+            id_poins = self.id_poin_ndvi
             
         else:
             name_serie = ''
             name_forecast = ''
 
-
         fig = go.Figure(layout=go.Layout(plot_bgcolor='rgba(0,0,0,0)'))
-        fig.add_trace(go.Scatter(x=pd_training.index,
-                                y=pd_training[serie],
-                                mode='lines',
-                                name=name_serie,
-                                line=line_training,
-                                xperiodalignment="middle"
-                                ))
-        fig.add_trace(go.Scatter(x=pd_forecast.index,
-                                y=pd_forecast[serie],
-                                mode='lines+markers',
-                                name=name_forecast,
-                                marker_symbol=marker_symbol,
-                                marker_line_width=3,
-                                marker_size=3,
-                                marker_line_color=marker_line_color,
-                                marker_color=marker_color,
-                                line=line_prediction,
-                                xperiodalignment="middle"
-                                ))
+
+        list_update = []
+        for id in id_poins:
+
+            fig.add_trace(go.Scatter(x=pd_training.query(f'id_point=={id}').index,
+                                    y=pd_training.query(f'id_point=={id}')[serie],
+                                    mode='lines',
+                                    name=name_serie,
+                                    line=line_training,
+                                    xperiodalignment="middle"
+                                    ))
+            fig.add_trace(go.Scatter(x=pd_forecast.query(f'id_point=={id}').index,
+                                    y=pd_forecast.query(f'id_point=={id}')[serie],
+                                    mode='lines+markers',
+                                    name=name_forecast,
+                                    marker_symbol=marker_symbol,
+                                    marker_line_width=3,
+                                    marker_size=3,
+                                    marker_line_color=marker_line_color,
+                                    marker_color=marker_color,
+                                    line=line_prediction,
+                                    xperiodalignment="middle"
+                                    ))
+
+            list_arg = (2*len(id_poins)-2)*[False]
+            list_arg.insert((id-1),True)
+            list_arg.insert(id,True)
+
+            list_update.append(dict(label=f' {id}  ',
+                                    method="update",
+                                    args=[{'visible':list_arg}]
+                                    )
+                                )
+
+
+        list_update.insert(0,
+                        dict(label=f' All ',
+                            method="update",
+                            args=[{'visible':(2*len(id_poins))*[True]}]
+                            )
+                        )
 
         # linea de pronostico
         fig.add_vline(x=pd_training.index.max(),
@@ -455,6 +478,8 @@ class PARK_METEOROLOGICAL:
                         xaxis=dict(
                             range = [pd_forecast.index.max()- pd.DateOffset(months=5*12), pd_forecast.index.max() + pd.DateOffset(months=1)],
                             rangeselector=dict(
+                                x=0,
+                                y=1.1,
                                 buttons=list([
                                     dict(count=1,
                                         label="1-años",
@@ -476,8 +501,30 @@ class PARK_METEOROLOGICAL:
                                 ])),
 
                             rangeslider=dict(visible=True),
-                            type="date")
+                            type="date"),
+                        updatemenus=[dict(type="dropdown",
+                                        direction="down",
+                                        bgcolor='Dark Blue',
+                                        buttons=list(list_update),
+                                        #active=id_poins[0],
+                                        showactive=True,
+                                        xanchor="right",
+                                        x=1.1,
+                                        yanchor="top",
+                                        y=1.3
+                                        )]
                             
                             )
+
+        fig.update_layout(
+            annotations=[
+                        dict(text="Punto:",
+                            x=1,
+                            xref="paper",
+                            y=1.3,
+                            yref="paper",
+                            showarrow=False,
+                            align="left",)
+                        ])
 
         return fig    
