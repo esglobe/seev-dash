@@ -19,6 +19,20 @@ class PARK_METEOROLOGICAL:
     PRECI_CRS = CRS.from_wkt('GEOGCS["Coordinate System imported from GRIB file",DATUM["unnamed",SPHEROID["Sphere",6367470,0]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Latitude",NORTH],AXIS["Longitude",EAST]]')
 
     #--
+    def park_format(x = 'cerrosaroche'):
+        """
+        Funcion para el nopmbre de los parques
+        """
+
+        try:
+
+            park_name = ' '.join([x.capitalize() for x in  x.split('_')])
+        except:
+            park_name = None
+
+        return park_name
+
+    #--
     def get_parks(self):
         """
         Fucnion para identificar a los parques
@@ -31,6 +45,7 @@ class PARK_METEOROLOGICAL:
         # Parks
         parks = db.estimateMeteorological.distinct("park")
         self.parks = [x for x in parks]
+        self.parks_formato = [PARK_METEOROLOGICAL.park_format(x) for x in self.parks]
 
         # Cerrando conexion
         mongoConexion.close()
