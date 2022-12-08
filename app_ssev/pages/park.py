@@ -1,6 +1,7 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html, Input, Output, ctx, callback
+from datetime import date
 
 from utils.PARK_METEOROLOGICAL import *
 
@@ -13,8 +14,6 @@ dash.register_page(
 # Data parque
 meteorological = PARK_METEOROLOGICAL()
 meteorological.get_parks()
-#list_label = [PARK_METEOROLOGICAL.park_format(x) for x in meteorological.parks]
-#defaul_park = 'Terepaima'
 dropdown_items = [{'value': x,
                    'label': PARK_METEOROLOGICAL.park_format(x) } \
                     for x in meteorological.parks]
@@ -34,18 +33,24 @@ layout = html.Div([
             html.Button('Elevación', id='btn-park-2', n_clicks=0),
             html.Button('Precipitación', id='btn-park-3', n_clicks=0),
             html.Button('NDVI', id='btn-park-4', n_clicks=0)],
-        className="btn-gruo-park", id='out-btn-park'),
+        className="btn-gruo-park",
+        id='out-btn-park'),
+
+        html.Div([dcc.DatePickerSingle(
+            id='my-date-picker-single',
+            min_date_allowed=date(1970, 1, 1),
+            max_date_allowed=date(2017, 9, 19),
+            initial_visible_month=date(2022, 1, 1),
+            month_format='M/Y',
+            date=date(2022, 1, 1)
+            )]),
 
         html.Div([html.Div(id='out-park')]),
 
-        html.Div([
-            
-            html.Div(children="""Dash: A web application framework for your data.""")
-            
-        ])
+        html.Div([html.Div(children="""Dash: A web application framework for your data.""")])
 ])
 
-
+#--
 @callback(
     Output('out-btn-park', 'value'),
     Input('dropdown-parks', 'value')
@@ -58,7 +63,7 @@ def seleccion_parque(value):
         return value
 
 
-
+#--
 @callback(
     Output('out-park', 'children'),
     Input('out-btn-park', 'value'),
@@ -88,7 +93,7 @@ def displayClick(valor, btn1, btn2, btn3, btn4):
     elif "btn-park-2" == ctx.triggered_id:
 
         graph_1 = park_class.espacio_temporal_graph(var_group='elevacion_media',
-                                                    periodo='2022-02-01',
+                                                    periodo='2022-01-01',
                                                     height=height,
                                                     width=width)
 
@@ -98,13 +103,12 @@ def displayClick(valor, btn1, btn2, btn3, btn4):
     elif "btn-park-3" == ctx.triggered_id:
 
         graph_1 = park_class.espacio_temporal_graph(var_group='precipitacion_app',
-                                                    periodo='2022-02-01',
+                                                    periodo='2022-01-01',
                                                     height=height,
                                                     width=width)
 
 
         graph_2 = park_class.time_serie_grafico(serie='precipitacion_app',
-                                                id_point=2, 
                                                 height=height,
                                                 width=width)                              
 
@@ -113,12 +117,11 @@ def displayClick(valor, btn1, btn2, btn3, btn4):
     
     else:
         graph_1 = park_class.espacio_temporal_graph(var_group='ndvi_app',
-                                                    periodo='2022-02-01',
+                                                    periodo='2022-01-01',
                                                     height=height,
                                                     width=width)
 
         graph_2 = park_class.time_serie_grafico(serie='ndvi_app',
-                                                id_point=2, 
                                                 height=height,
                                                 width=width) 
 

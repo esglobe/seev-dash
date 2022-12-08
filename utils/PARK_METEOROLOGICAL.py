@@ -341,7 +341,7 @@ class PARK_METEOROLOGICAL:
 
 
     #--
-    def time_serie_grafico(self, serie,id_point, height=800, width=1500):
+    def time_serie_grafico(self, serie, height=800, width=1500):
 
         """
         Funcion para la grafica precipitacion y ndvi temporal
