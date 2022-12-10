@@ -76,6 +76,23 @@ body {
     justify-content: center;
   }
 
+/*
+.imag__venezuela{
+    max-width: 5%;
+  }
+*/
+
+.imag__noaa{
+    max-width: 5%;
+  }
+
+.imag__nasa{
+    max-width: 6.2%;
+  }
+
+.imag__copernicus{
+    max-width: 7.5%;
+  }
 
 .footer {
     display: grid;
@@ -88,6 +105,15 @@ body {
                          "izquierda_vacio creadores repositorios enlaces";
 }
 
+.header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, auto);
+    display: flex;
+    justify-content: right;
+    text-align: right;
+    grid-template-areas: "izqui_header izqui_header izqui_header dere_header";
+}
 
 @media screen and (max-width: 768px) {
     .wrapper {
