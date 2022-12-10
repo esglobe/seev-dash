@@ -36,14 +36,15 @@ layout = html.Div([
         className="btn-gruo-park",
         id='out-btn-park'),
 
-        html.Div([dcc.DatePickerSingle(
-            id='my-date-picker-single',
-            min_date_allowed=date(1970, 1, 1),
-            max_date_allowed=date(2017, 9, 19),
-            initial_visible_month=date(2022, 1, 1),
-            month_format='M/Y',
-            date=date(2022, 1, 1)
-            )]),
+        html.Div([
+            dcc.DatePickerSingle(id='date-picker',
+                                min_date_allowed=date(1970, 1, 1),
+                                max_date_allowed=date(2030, 12, 31),
+                                initial_visible_month=date(2022, 1, 1),
+                                #month_format='D/M/Y',
+                                date=date(2022, 1, 1)
+                                )
+                ]),
 
         html.Div([html.Div(id='out-park')]),
 
@@ -70,16 +71,28 @@ def seleccion_parque(value):
     Input('btn-park-1', 'n_clicks'),
     Input('btn-park-2', 'n_clicks'),
     Input('btn-park-3', 'n_clicks'),
-    Input('btn-park-4', 'n_clicks')
+    Input('btn-park-4', 'n_clicks'),
+    Input('date-picker', 'date')
 )
-def displayClick(valor, btn1, btn2, btn3, btn4):
+def displayClick(out_btn_parkr, btn_park_1, btn_park_2, btn_park_3, btn_park_4, date_picker):
 
     height=500
     width=1000
 
+    #--
     try:
         park_class = PARK_METEOROLOGICAL()
-        park_class.get_data(park=valor)
+        park_class.get_data(park=out_btn_parkr)
+        
+    except:
+        return """ERROR"""
+
+    #--
+    try:
+        date_object = date.fromisoformat(date_picker)\
+                        .strftime('%Y-%m')
+        periodo = str(date_object)+'-01'
+
     except:
         return """ERROR"""
     
@@ -93,7 +106,7 @@ def displayClick(valor, btn1, btn2, btn3, btn4):
     elif "btn-park-2" == ctx.triggered_id:
 
         graph_1 = park_class.espacio_temporal_graph(var_group='elevacion_media',
-                                                    periodo='2022-01-01',
+                                                    periodo=periodo,
                                                     height=height,
                                                     width=width)
 
@@ -103,7 +116,7 @@ def displayClick(valor, btn1, btn2, btn3, btn4):
     elif "btn-park-3" == ctx.triggered_id:
 
         graph_1 = park_class.espacio_temporal_graph(var_group='precipitacion_app',
-                                                    periodo='2022-01-01',
+                                                    periodo=periodo,
                                                     height=height,
                                                     width=width)
 
@@ -117,7 +130,7 @@ def displayClick(valor, btn1, btn2, btn3, btn4):
     
     else:
         graph_1 = park_class.espacio_temporal_graph(var_group='ndvi_app',
-                                                    periodo='2022-01-01',
+                                                    periodo=periodo,
                                                     height=height,
                                                     width=width)
 

@@ -13,6 +13,7 @@ class TEMPERATURA:
     """
 
     COLECCION = 'SSEV'
+    PAST_YEARS = 15
 
     #--
     def get_data(self):
@@ -23,15 +24,18 @@ class TEMPERATURA:
         # Creando la conexión con MongoDB
         mongoConexion = CONEXION.conexion()
         db = mongoConexion[TEMPERATURA.COLECCION]
+        time_filter = (datetime.today()-pd.DateOffset(months=TEMPERATURA.PAST_YEARS*12))\
+                        .toordinal()
 
         # Realizando consulta
-        sst_data = db.estimateSSTNino34.find({},{'data_pandas':1,
-                                                'anomalias':1,
-                                                'time_actualizacion':1,
-                                                'time':1,
-                                                'nino34_mean':1,
-                                                'oni':1,
-                                                'type':1})
+        sst_data = db.estimateSSTNino34.find({'time':{'$gte':time_filter}},
+                                            {'data_pandas':1,
+                                            'anomalias':1,
+                                            'time_actualizacion':1,
+                                            'time':1,
+                                            'nino34_mean':1,
+                                            'oni':1,
+                                            'type':1})
 
         # Generando pandas dataframe
         data_pandas = pd.DataFrame([file for file in sst_data])

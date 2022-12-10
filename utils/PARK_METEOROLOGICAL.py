@@ -16,6 +16,9 @@ class PARK_METEOROLOGICAL:
     Clase para la graficos de precipitacio, ndvi del parque
     """
 
+    COLECCION = 'SSEV'
+    PAST_YEARS = 15
+
     PRECI_CRS = CRS.from_wkt('GEOGCS["Coordinate System imported from GRIB file",DATUM["unnamed",SPHEROID["Sphere",6367470,0]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Latitude",NORTH],AXIS["Longitude",EAST]]')
 
     #--
@@ -40,7 +43,7 @@ class PARK_METEOROLOGICAL:
 
         # Creando la conexión con MongoDB
         mongoConexion = CONEXION.conexion()
-        db = mongoConexion['SSEV']
+        db = mongoConexion[PARK_METEOROLOGICAL.COLECCION]
 
         # Parks
         parks = db.estimateMeteorological.distinct("park")
@@ -58,12 +61,14 @@ class PARK_METEOROLOGICAL:
 
         # Creando la conexión con MongoDB
         mongoConexion = CONEXION.conexion()
-        db = mongoConexion['SSEV']
+        db = mongoConexion[PARK_METEOROLOGICAL.COLECCION]
+        time_filter = (datetime.today()-pd.DateOffset(months=PARK_METEOROLOGICAL.PAST_YEARS*12))\
+                            .toordinal()
 
         #----
         # Data meteorologica
         #----
-        park_data = db.estimateMeteorological.find({'park':park},
+        park_data = db.estimateMeteorological.find({'park':park,'time':{'$gte':time_filter}},
                                                     {'id_point':1,
                                                     'latitud':1,
                                                     'longitud':1,
