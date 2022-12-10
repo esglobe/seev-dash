@@ -18,17 +18,11 @@ app.title = 'SSEV'
 
 #------------------------------
 app.layout = html.Div([
-
     #--
     html.Div([
-        html.Div([],className='izqui_header'),
-        html.Div([
             html.Img(src=app.get_asset_url("noaa.png"),className="imag__noaa"),
             html.Img(src=app.get_asset_url("nasa.png"),className="imag__nasa"),
             html.Img(src=app.get_asset_url("copernicus.png"),className="imag__copernicus")
-            #html.Img(src=app.get_asset_url("venezuela.png"),className="imag__venezuela")
-            ],className='dere_header')        
-        
         ],className="header"),
 
     #--
@@ -69,7 +63,6 @@ app.layout = html.Div([
     
     #--
     html.Div([
-        html.H5('contenido:'),
         dash.page_container
         ],className="contenido"),
 
