@@ -17,49 +17,66 @@ temperatura.get_data()
 
 #--
 layout = html.Div([
-        html.H2(children=f"Temperatura promedio en la superficie del mar (SST)"),
-        html.H3(children=f"Región El Niño 3.4"),
-        html.Div([
-            html.Button('SST', id='btn-nclicks-1', n_clicks=0),
-            html.Button('Anomalías de SST', id='btn-nclicks-2', n_clicks=0),
-            html.Button('ONI', id='btn-nclicks-3', n_clicks=0),
-        ],className="btn-gruo-oni"),
-        
-        html.Div([html.Div(id='container-button-timestamp')]),
 
-        html.Div([
-            
-            html.Div(children="""Dash: A web application framework for your data.""")
-            
-        ])
+        dcc.Markdown("""
+        # La temperatura promedio en la superficie del mar (SST)
+
+        El Niño-Oscilación del Sur (ENSO), es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia.  Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela. En consecuencia, dada la correlación existente entre el ENSO y la precipitación (que a su vez incide en el crecimiento de la capa vegetal) es relevante dirigir los próximos pasos de la investigación a comprender el origen y posibles causas de este fenómeno.
+
+        En este sentido, el ENSO consta de tres fases: Una Neutra, El Niño (se inicia con un calentamiento a gran escala de las aguas de superficie en la parte central y oriental del Pacífico ecuatorial) y La Niña (se produce un enfriamiento de las temperaturas de la superficie del océano). Las fluctuaciones de las temperaturas oceánicas durante los episodios de El Niño y La Niña van acompañadas de fluctuaciones aún mayores de la presión del aire que se conoce como Oscilación del Sur. Se trata de un movimiento de ida y vuelta, de este a oeste, de masa de aire, entre el Pacífico y la región Indoaustraliana.
+        
+        """),
+        html.Br(),
+        html.Br(),
+        dcc.Tabs(id="tabs-temp", value='tab-sst', 
+            children=[dcc.Tab(label='SST', value='tab-sst'),
+                    dcc.Tab(label='Anomalías de SST', value='tab-anomalias'),
+                    dcc.Tab(label='ONI', value='tab-oni')
+                ]),
+
+        html.Div([html.Div(id='out-tab-temp')])
 ])
 
 
 @callback(
-    Output('container-button-timestamp', 'children'),
-    Input('btn-nclicks-1', 'n_clicks'),
-    Input('btn-nclicks-2', 'n_clicks'),
-    Input('btn-nclicks-3', 'n_clicks')
+    Output('out-tab-temp', 'children'),
+    Input('tabs-temp', 'value')
 )
-def displayClick(btn1, btn2, btn3):
+def displayClick(tabs_temp):
 
-    height=700
-    width=1200
+    height=600
+    width=900
 
-    if "btn-nclicks-1" == ctx.triggered_id:
+    if tabs_temp == 'tab-sst':
 
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            dcc.Markdown(""" texto nino34_mean"""),
+            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Markdown(""" texto """)
+            ]
 
-    elif "btn-nclicks-2" == ctx.triggered_id:
+    elif tabs_temp == 'tab-anomalias':
 
         graph = temperatura.temperatura_sst(serie='anomalias', height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            dcc.Markdown(""" texto anomalias"""),
+            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Markdown(""" texto """)
+        ]
 
-    elif "btn-nclicks-3" == ctx.triggered_id:
+    elif tabs_temp == 'tab-oni':
         graph = temperatura.temperatura_oni(height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            dcc.Markdown(""" texto oni"""),
+            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Markdown(""" texto """)
+        ]
     
     else:
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            dcc.Markdown(""" texto nino34_mean"""),
+            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Markdown(""" texto """)
+        ]
