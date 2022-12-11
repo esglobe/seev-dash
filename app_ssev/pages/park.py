@@ -6,7 +6,7 @@ from datetime import date
 
 from utils.PARK_METEOROLOGICAL import *
 
-responsive = os.environ["RESPONSIVE"]
+responsive = True
 
 dash.register_page(
     __name__,
@@ -40,7 +40,7 @@ layout = html.Div([
                 ]),
         html.Br(),
         html.Br(),
-        html.Div([html.Div(id='out-park-graf')]),
+        html.Div([html.Div(id='out-park-graf', className="out__park__graf")]),
         html.Br(),
         html.Br(),
         html.Div([
@@ -54,12 +54,14 @@ layout = html.Div([
                 ]),
         html.Br(),
         html.Br(),
+        html.Div([
         dcc.Tabs(id="tabs-parks", value='tab-precipitacion', 
             children=[
                     dcc.Tab(label='Precipitación', value='tab-precipitacion'),
                     dcc.Tab(label='NDVI', value='tab-ndvi'),
                     dcc.Tab(label='Elevación', value='tab-elevacion')
-                    ]),
+                    ],style={'align':'center'})
+        ]),
         html.Br(),
         html.Br(),
         html.Div([html.Div(id='out-park-tab')]),
@@ -91,11 +93,17 @@ def seleccion_parque(value):
         graph_1 = park_class.localizacion_park(height=height, width=width)
         
         return  [
-            dcc.Markdown("""Informacion"""),
+            dcc.Markdown("""
+            El Niño-Oscilación del Sur (ENSO), es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia.  Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela. En consecuencia, dada la correlación existente entre el ENSO y la precipitación (que a su vez incide en el crecimiento de la capa vegetal) es relevante dirigir los próximos pasos de la investigación a comprender el origen y posibles causas de este fenómeno.
+            En este sentido, el ENSO consta de tres fases: Una Neutra, El Niño (se inicia con un calentamiento a gran escala de las aguas de superficie en la parte central y oriental del Pacífico ecuatorial) y La Niña (se produce un enfriamiento de las temperaturas de la superficie del océano). Las fluctuaciones de las temperaturas oceánicas durante los episodios de El Niño y La Niña van acompañadas de fluctuaciones aún mayores de la presión del aire que se conoce como Oscilación del Sur. Se trata de un movimiento de ida y vuelta, de este a oeste, de masa de aire, entre el Pacífico y la región Indoaustraliana.
+            """),
             html.Br(),
-            dcc.Graph(id="graph-park", figure=graph_1,responsive=responsive),
+            dcc.Graph(id="graph-park", figure=graph_1, responsive=responsive, className="graph__park"),
             html.Br(),
-            dcc.Markdown("""Informacion""")
+            dcc.Markdown("""
+            El Niño-Oscilación del Sur (ENSO), es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia.  Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela. En consecuencia, dada la correlación existente entre el ENSO y la precipitación (que a su vez incide en el crecimiento de la capa vegetal) es relevante dirigir los próximos pasos de la investigación a comprender el origen y posibles causas de este fenómeno.
+            En este sentido, el ENSO consta de tres fases: Una Neutra, El Niño (se inicia con un calentamiento a gran escala de las aguas de superficie en la parte central y oriental del Pacífico ecuatorial) y La Niña (se produce un enfriamiento de las temperaturas de la superficie del océano). Las fluctuaciones de las temperaturas oceánicas durante los episodios de El Niño y La Niña van acompañadas de fluctuaciones aún mayores de la presión del aire que se conoce como Oscilación del Sur. Se trata de un movimiento de ida y vuelta, de este a oeste, de masa de aire, entre el Pacífico y la región Indoaustraliana.
+            """)
             ]
         
     except:
@@ -150,7 +158,12 @@ def displayClick(dropdown_parks, date_picker, tabs_parks):
                                                     width=width)
 
 
-        return  [dcc.Graph(id="graph-elevacion", figure=graph_1,responsive=responsive)]
+        return  [
+            dcc.Markdown("""
+                        El Niño-Oscilación del Sur (ENSO), es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia.  Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela. En consecuencia, dada la correlación existente entre el ENSO y la precipitación (que a su vez incide en el crecimiento de la capa vegetal) es relevante dirigir los próximos pasos de la investigación a comprender el origen y posibles causas de este fenómeno.
+                        En este sentido, el ENSO consta de tres fases: Una Neutra, El Niño (se inicia con un calentamiento a gran escala de las aguas de superficie en la parte central y oriental del Pacífico ecuatorial) y La Niña (se produce un enfriamiento de las temperaturas de la superficie del océano). Las fluctuaciones de las temperaturas oceánicas durante los episodios de El Niño y La Niña van acompañadas de fluctuaciones aún mayores de la presión del aire que se conoce como Oscilación del Sur. Se trata de un movimiento de ida y vuelta, de este a oeste, de masa de aire, entre el Pacífico y la región Indoaustraliana.
+                        """),
+            dcc.Graph(id="graph-elevacion", figure=graph_1,responsive=responsive)]
 
     elif tabs_parks == 'tab-precipitacion':
 

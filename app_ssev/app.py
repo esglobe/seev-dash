@@ -20,9 +20,17 @@ app.title = 'SSEV'
 app.layout = html.Div([
     #--
     html.Div([
+
+        html.Div([
             html.Img(src=app.get_asset_url("noaa.png"),className="imag__noaa"),
             html.Img(src=app.get_asset_url("nasa.png"),className="imag__nasa"),
             html.Img(src=app.get_asset_url("copernicus.png"),className="imag__copernicus")
+        ],className="header__izquierda"),
+        html.Div([
+            #html.Img(src=app.get_asset_url("usb.png"),className="imag__logo__usb"),
+            #html.Img(src=app.get_asset_url("venezuela.png"),className="imag__venezuela"),
+            ],className="header__derecha")
+        
         ],className="header"),
 
     #--
@@ -35,7 +43,7 @@ app.layout = html.Div([
         html.Br(),
         html.Div([
             html.H1('SSEV'),
-            html.H4('Sistema para el Seguimiento de Ecosistemas Venezolanos')
+            html.H4('Sistema para el Seguimiento de Ecosistemas Venezolanos',style={'line-height':'normal','text-align': 'left'})
             ]),
         html.Br(),
         html.Br(),
@@ -117,11 +125,6 @@ app.layout = html.Div([
 
 ],className="wrapper")
 #------------------------------
-
-
-#https://github.com/plotly/dash-sample-apps/blob/main/apps/dash-brain-viewer/app.py
-#https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Introduction
-#https://plotly.com/python/custom-buttons/
 
 
 if __name__ == "__main__":

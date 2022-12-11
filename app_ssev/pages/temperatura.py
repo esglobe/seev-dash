@@ -4,7 +4,7 @@ from dash import dcc, html, Input, Output, ctx, callback
 
 from utils.TEMPERATURA import *
 
-responsive = os.environ["RESPONSIVE"]
+responsive = True
 
 dash.register_page(
     __name__,
