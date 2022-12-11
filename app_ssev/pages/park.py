@@ -1,9 +1,12 @@
+import os
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html, Input, Output, ctx, callback
 from datetime import date
 
 from utils.PARK_METEOROLOGICAL import *
+
+responsive = os.environ["RESPONSIVE"]
 
 dash.register_page(
     __name__,
@@ -27,7 +30,6 @@ layout = html.Div([
         El Niño-Oscilación del Sur (ENSO), es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia.  Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela. En consecuencia, dada la correlación existente entre el ENSO y la precipitación (que a su vez incide en el crecimiento de la capa vegetal) es relevante dirigir los próximos pasos de la investigación a comprender el origen y posibles causas de este fenómeno.
 
         En este sentido, el ENSO consta de tres fases: Una Neutra, El Niño (se inicia con un calentamiento a gran escala de las aguas de superficie en la parte central y oriental del Pacífico ecuatorial) y La Niña (se produce un enfriamiento de las temperaturas de la superficie del océano). Las fluctuaciones de las temperaturas oceánicas durante los episodios de El Niño y La Niña van acompañadas de fluctuaciones aún mayores de la presión del aire que se conoce como Oscilación del Sur. Se trata de un movimiento de ida y vuelta, de este a oeste, de masa de aire, entre el Pacífico y la región Indoaustraliana.
-        
         """),
         html.Br(),
         html.Br(),
@@ -36,6 +38,10 @@ layout = html.Div([
                         value=meteorological.parks[0],
                         id='dropdown-parks')
                 ]),
+        html.Br(),
+        html.Br(),
+        html.Div([html.Div(id='out-park-graf')]),
+        html.Br(),
         html.Br(),
         html.Div([
             dcc.DatePickerSingle(id='date-picker',
@@ -48,37 +54,63 @@ layout = html.Div([
                 ]),
         html.Br(),
         html.Br(),
-        dcc.Tabs(id="tabs-parks", value='tab-park', 
-            children=[dcc.Tab(label='El Parque', value='tab-park'),
-                    dcc.Tab(label='Elevación', value='tab-elevacion'),
+        dcc.Tabs(id="tabs-parks", value='tab-precipitacion', 
+            children=[
                     dcc.Tab(label='Precipitación', value='tab-precipitacion'),
-                    dcc.Tab(label='NDVI', value='tab-ndvi')
-                ]),
-
-        html.Div([html.Div(id='out-park')])
+                    dcc.Tab(label='NDVI', value='tab-ndvi'),
+                    dcc.Tab(label='Elevación', value='tab-elevacion')
+                    ]),
+        html.Br(),
+        html.Br(),
+        html.Div([html.Div(id='out-park-tab')]),
+        html.Br(),
+        html.Br()
 
 ])
 
 #--
 @callback(
-    Output('select-park', 'value'),
+    Output('out-park-graf', 'children'),
     Input('dropdown-parks', 'value')
 )
 def seleccion_parque(value):
 
-    if value not in meteorological.parks:
-        return meteorological.parks[0]
-    else:
-        return value
+    height=600
+    width=600
+
+    #--
+    try:
+        if value not in meteorological.parks:
+            park = meteorological.parks[0]
+        else:
+            park = value
+
+        park_class = PARK_METEOROLOGICAL()
+        park_class.get_data_polygon(park=park)
+
+        graph_1 = park_class.localizacion_park(height=height, width=width)
+        
+        return  [
+            dcc.Markdown("""Informacion"""),
+            html.Br(),
+            dcc.Graph(id="graph-park", figure=graph_1,responsive=responsive),
+            html.Br(),
+            dcc.Markdown("""Informacion""")
+            ]
+        
+    except:
+        return """ERROR"""
+
+
 
 #--
 @callback(
-    Output('out-park', 'children'),
-    Input('select-park', 'value'),
-    Input('tabs-parks', 'value'),
-    Input('date-picker', 'date')
+    Output('out-park-tab', 'children'),
+    Input('dropdown-parks', 'value'),
+    Input('date-picker', 'date'),
+    Input('tabs-parks', 'value')
 )
-def displayClick(select_park, tabs_parks, date_picker):
+def displayClick(dropdown_parks, date_picker, tabs_parks):
 
     height=600
     width=600
@@ -88,8 +120,14 @@ def displayClick(select_park, tabs_parks, date_picker):
 
     #--
     try:
+        if dropdown_parks not in meteorological.parks:
+            park = meteorological.parks[0]
+        else:
+            park = dropdown_parks
+
         park_class = PARK_METEOROLOGICAL()
-        park_class.get_data(park=select_park)
+        park_class.get_data_polygon(park=park)
+        park_class.get_data(park=park)
         
     except:
         return """ERROR"""
@@ -103,14 +141,8 @@ def displayClick(select_park, tabs_parks, date_picker):
     except:
         return """ERROR"""
     
-
-    if tabs_parks == 'tab-park':
-
-        graph_1 = park_class.localizacion_park(height=height, width=width)
-        
-        return  [dcc.Graph(id="example-graph-1", figure=graph_1)]
-
-    elif tabs_parks == 'tab-elevacion':
+    #--
+    if tabs_parks == 'tab-elevacion':
 
         graph_1 = park_class.espacio_temporal_graph(var_group='elevacion_media',
                                                     periodo=periodo,
@@ -118,7 +150,7 @@ def displayClick(select_park, tabs_parks, date_picker):
                                                     width=width)
 
 
-        return  [dcc.Graph(id="example-graph-2", figure=graph_1)]
+        return  [dcc.Graph(id="graph-elevacion", figure=graph_1,responsive=responsive)]
 
     elif tabs_parks == 'tab-precipitacion':
 
@@ -132,8 +164,8 @@ def displayClick(select_park, tabs_parks, date_picker):
                                                 height=time_height,
                                                 width=time_width)                              
 
-        return  [dcc.Graph(id="example-graph-31", figure=graph_1),
-                 dcc.Graph(id="example-graph-32", figure=graph_2)]
+        return  [dcc.Graph(id="graph-precipitacion-espacial", figure=graph_1,responsive=responsive),
+                 dcc.Graph(id="graph-precipitacion-temporal", figure=graph_2,responsive=responsive)]
     
     elif tabs_parks =='tab-ndvi':
 
@@ -146,6 +178,6 @@ def displayClick(select_park, tabs_parks, date_picker):
                                                 height=time_height,
                                                 width=time_width) 
 
-        return  [dcc.Graph(id="example-graph-41", figure=graph_1),
-                 dcc.Graph(id="example-graph-42", figure=graph_2)]
+        return  [dcc.Graph(id="graph-ndvi-espacial", figure=graph_1,responsive=responsive),
+                 dcc.Graph(id="graph-ndvi-temporal", figure=graph_2,responsive=responsive)]
                    

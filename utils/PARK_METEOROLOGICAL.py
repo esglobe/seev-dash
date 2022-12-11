@@ -118,6 +118,26 @@ class PARK_METEOROLOGICAL:
         #---
         # Data poligonos
         #---
+        # db_polygons = db.polygons.find({'park':park})
+        # self.polygons = [polygon for polygon in db_polygons]
+
+        # # Poligono del parque
+        # geoJson_polygon = json.dumps( self.polygons[0]['polygons']['polygon'] )
+        # geopandas_polygon = geopandas.read_file(geoJson_polygon)
+        # self.park_poligono = geopandas_polygon.to_crs(PARK_METEOROLOGICAL.PRECI_CRS)
+
+        # Cerrando conexion
+        mongoConexion.close()
+    
+    
+    #--
+    def get_data_polygon(self,park='terepaima'):
+        """
+        Datos de poligono dle parque
+        """     
+        mongoConexion = CONEXION.conexion()
+        db = mongoConexion[PARK_METEOROLOGICAL.COLECCION]   
+
         db_polygons = db.polygons.find({'park':park})
         self.polygons = [polygon for polygon in db_polygons]
 

@@ -1,8 +1,10 @@
+import os
 import dash
 from dash import dcc, html, Input, Output, ctx, callback
 
 from utils.TEMPERATURA import *
 
+responsive = os.environ["RESPONSIVE"]
 
 dash.register_page(
     __name__,
@@ -52,7 +54,7 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
         return [
             dcc.Markdown(""" texto nino34_mean"""),
-            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
             dcc.Markdown(""" texto """)
             ]
 
@@ -61,7 +63,7 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_sst(serie='anomalias', height=height, width=width)
         return [
             dcc.Markdown(""" texto anomalias"""),
-            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
             dcc.Markdown(""" texto """)
         ]
 
@@ -69,7 +71,7 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_oni(height=height, width=width)
         return [
             dcc.Markdown(""" texto oni"""),
-            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
             dcc.Markdown(""" texto """)
         ]
     
@@ -77,6 +79,6 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
         return [
             dcc.Markdown(""" texto nino34_mean"""),
-            dcc.Graph(id="example-graph", figure=graph),
+            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
             dcc.Markdown(""" texto """)
         ]

@@ -57,7 +57,8 @@ layout = html.Div([
         html.Div([
             gif.GifPlayer(gif='assets/rbg.gif',
                     still='assets/rbg.jpg',
-                    alt='Reflectancia de superficie terrestre (VNP09GA)'),
+                    alt='Reflectancia de superficie terrestre (VNP09GA)'
+                    ),
         ],className='gif__imag',style={'align':'center'}),
         html.Br(),
 
