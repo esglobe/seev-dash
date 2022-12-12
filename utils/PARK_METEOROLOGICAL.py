@@ -322,7 +322,7 @@ class PARK_METEOROLOGICAL:
                                   tickformat= tickformat),
           yaxis_title=yaxis_title,
           xaxis_title=xaxis_title,
-          font = dict(size = 22),
+          font = dict(size = 14),
           height=height,
           width=width,
           uniformtext_minsize=8,
@@ -485,7 +485,7 @@ class PARK_METEOROLOGICAL:
                         tickcolor='#5C2B05',
                         ticklen=10)
 
-        fig.update_traces(textfont_size=18)
+        fig.update_traces(textfont_size=14)
 
         fig.update_layout(showlegend=False,
                         xaxis_title=xaxis_title,
@@ -499,7 +499,7 @@ class PARK_METEOROLOGICAL:
                         uniformtext_mode='hide',
                         height=height,
                         width=width,
-                        font = dict(size = 22),
+                        font = dict(size = 14),
                         xaxis=dict(
                             range = [pd_forecast.index.max()- pd.DateOffset(months=5*12), pd_forecast.index.max() + pd.DateOffset(months=1)],
                             rangeselector=dict(

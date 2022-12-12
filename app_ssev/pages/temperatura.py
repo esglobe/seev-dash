@@ -36,7 +36,7 @@ layout = html.Div([
                     dcc.Tab(label='ONI', value='tab-oni')
                 ]),
 
-        html.Div([html.Div(id='out-tab-temp')])
+        html.Div([html.Div(id='out-tab-temp')],className='out__tab__temp')
 ])
 
 
@@ -54,7 +54,7 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
         return [
             dcc.Markdown(""" texto nino34_mean"""),
-            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
+            dcc.Graph(id="graph_sst", figure=graph,responsive=responsive,className='graph__sst'),
             dcc.Markdown(""" texto """)
             ]
 
@@ -63,7 +63,7 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_sst(serie='anomalias', height=height, width=width)
         return [
             dcc.Markdown(""" texto anomalias"""),
-            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
+            dcc.Graph(id="graph_anomalias", figure=graph,responsive=responsive,className='graph__anomalias'),
             dcc.Markdown(""" texto """)
         ]
 
@@ -71,7 +71,7 @@ def displayClick(tabs_temp):
         graph = temperatura.temperatura_oni(height=height, width=width)
         return [
             dcc.Markdown(""" texto oni"""),
-            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
+            dcc.Graph(id="graph_oni", figure=graph,responsive=responsive,className='graph__oni'),
             dcc.Markdown(""" texto """)
         ]
     

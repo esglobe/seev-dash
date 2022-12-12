@@ -140,7 +140,7 @@ class TEMPERATURA:
                         tickcolor='#5C2B05',
                         ticklen=10)
 
-        fig.update_traces(textfont_size=18)
+        fig.update_traces(textfont_size=14)
 
         fig.update_layout(showlegend=False,
                         xaxis_title=xaxis_title,
@@ -154,7 +154,7 @@ class TEMPERATURA:
                         uniformtext_mode='hide',
                         height=height,
                         width=width,
-                        font = dict(size = 22),
+                        font = dict(size = 14),
                         xaxis=dict(
                             range = [pd_forecast.index.max()- pd.DateOffset(months=5*12), pd_forecast.index.max() + pd.DateOffset(months=1)],
                             rangeselector=dict(
@@ -275,12 +275,12 @@ class TEMPERATURA:
         #                         """.format(date_init=str(data_fig[data_fig.type=='prediction'].index.min().strftime('%Y/%m')),
         #                                 date_fin=str(data_fig[data_fig.type=='prediction'].index.max().strftime('%Y/%m')) ),
                         xaxis_title='Mes',
-                        yaxis_title='Promedio 3-Meses anomalías SST (°C)',
+                        yaxis_title="""Promedio 3-Meses anomalías SST (°C)""",
                         uniformtext_minsize=8,
                         uniformtext_mode='hide',
                         height=height,
                         width=width,
-                        font = dict(size = 22),
+                        font = dict(size = 14),
                         xaxis=dict(
                                     range = [data_fig[data_fig.type=='prediction'].index.max()- pd.DateOffset(months=5*12), data_fig[data_fig.type=='prediction'].index.max() + pd.DateOffset(months=1)],
                                     rangeselector=dict(

@@ -162,8 +162,19 @@ body {
 /* --------------------------  */
 /* TEMPERATURA                 */
 /* --------------------------  */
+.graph__sst,
+.graph__anomalias,
+.graph__oni {
+  max-width: 100%;
+  max-height: 100%;
+  font-size: 5%;
+}
 
-
+.out__tab__temp {
+  max-width: 3fr;
+  max-height: 2fr;
+  overflow: auto;
+}
 /* --------------------------  */
 /* PARK                        */
 /* --------------------------  */
