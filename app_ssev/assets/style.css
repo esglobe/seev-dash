@@ -154,7 +154,7 @@ body {
   }
 
 .wrapper__home .imag__ndvi{
-    max-width: 60%;
+    max-width: 45%;
     display:block;
     margin:auto;
   }
@@ -196,7 +196,8 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-    .wrapper {
+
+  .wrapper {
         grid-template-areas: "sidebar header header"
                              "sidebar contenido contenido"
                              "sidebar contenido contenido"
