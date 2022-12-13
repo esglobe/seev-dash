@@ -16,7 +16,7 @@ layout = html.Div([
 
     html.Div([
         dcc.Markdown("""
-        # El SSEV
+        # El Sistema para el Seguimiento de Ecosistemas Venezolanos (SSEV)
          
         El SSEV es un proyecto de investigación destinado al seguimiento y monitoreo del Índice de Vegetación de Diferencia Normalizada (NDVI) de los parques nacionales venezolanos. Un índice de vegetación puede ser definido como un parámetro calculado a partir de los valores de la reflectancia a distintas longitudes de onda, y que es particularmente sensible a la cubierta vegetal. Estos pueden ser usados para determinar la evolución en el tiempo de la cantidad, calidad y desarrollo de la vegetación en las áreas protegidas.
         """),

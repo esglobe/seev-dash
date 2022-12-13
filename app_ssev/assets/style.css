@@ -190,6 +190,13 @@ body {
   overflow: auto;
 }
 
+.img__ndvi__espacial,
+.img__precipitacion__espacial {
+  width: 2fr;
+  height: 2fr;
+}
+
+
 .contenido {
   overflow: auto;
 
