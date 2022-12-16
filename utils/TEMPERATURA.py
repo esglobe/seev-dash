@@ -275,7 +275,7 @@ class TEMPERATURA:
         #                         """.format(date_init=str(data_fig[data_fig.type=='prediction'].index.min().strftime('%Y/%m')),
         #                                 date_fin=str(data_fig[data_fig.type=='prediction'].index.max().strftime('%Y/%m')) ),
                         xaxis_title='Mes',
-                        yaxis_title="""Promedio 3-Meses anomalías SST (°C)""",
+                        yaxis_title="""Promedio 3-Meses<br>anomalías SST (°C)""",
                         uniformtext_minsize=8,
                         uniformtext_mode='hide',
                         height=height,

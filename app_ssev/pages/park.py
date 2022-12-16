@@ -1,6 +1,7 @@
 import os
 import dash
 import dash_bootstrap_components as dbc
+import dash_daq as daq
 from dash import dcc, html, Input, Output, ctx, callback
 from datetime import date
 
@@ -26,14 +27,14 @@ dropdown_items = [{'value': x,
 #--
 layout = html.Div([
         dcc.Markdown("""
-        # La temperatura promedio en la superficie del mar (SST)
+        # Seguimiento de parques
 
-        El Niño-Oscilación del Sur (ENSO), es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia.  Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela. En consecuencia, dada la correlación existente entre el ENSO y la precipitación (que a su vez incide en el crecimiento de la capa vegetal) es relevante dirigir los próximos pasos de la investigación a comprender el origen y posibles causas de este fenómeno.
-
-        En este sentido, el ENSO consta de tres fases: Una Neutra, El Niño (se inicia con un calentamiento a gran escala de las aguas de superficie en la parte central y oriental del Pacífico ecuatorial) y La Niña (se produce un enfriamiento de las temperaturas de la superficie del océano). Las fluctuaciones de las temperaturas oceánicas durante los episodios de El Niño y La Niña van acompañadas de fluctuaciones aún mayores de la presión del aire que se conoce como Oscilación del Sur. Se trata de un movimiento de ida y vuelta, de este a oeste, de masa de aire, entre el Pacífico y la región Indoaustraliana.
+        SSEV es una herramienta diseñada para el seguimiento de la la capa vegetal de los parques nacionales venezolanos a través del Índice de Vegetación de Diferencia Normalizada (NDVI). Con este objeto se entrenan redes neuronales para predecir la variación espacio-temporal del NDVI tomando como variable oxigena a la precipitación total.
         """),
         html.Br(),
-        html.Br(),
+        dcc.Markdown("""
+        Seleccione el parque de interés:
+        """),
         html.Div([
             dcc.Dropdown(options=dropdown_items,
                         value=meteorological.parks[0],
@@ -51,18 +52,40 @@ layout = html.Div([
         html.Br(),
         html.Div([
             dcc.Markdown("""
-            ## La precipitación y el NDVI en el parque
+            ## La precipitación y NDVI
 
-            Seleccione un periodo en el cual desea evaluar los indicadores espaciales. Los valores de precipitación y NDVI son valores mensuales por lo que solo se considera el año y mes.
+            Seleccione un periodo:
             """),
             html.Br(),
-            dcc.DatePickerSingle(id='date-picker',
-                                min_date_allowed=date(1970, 1, 1),
-                                max_date_allowed=date(2030, 12, 31),
-                                initial_visible_month=date(2022, 1, 1),
-                                #month_format='D/M/Y',
-                                date=date(2022, 1, 1)
+            html.Div([
+                html.Div([
+                daq.NumericInput(
+                                min=1,
+                                max=12,
+                                value=1,
+                                label={'label':'Mes'},
+                                id='date-month',
+                                className='date__month',
+                                size=100,
+                                labelPosition='bottom'
+                                ),
+                daq.NumericInput(
+                                min=1970,
+                                max=2050,
+                                value=2022,
+                                label={'label':'Año'},
+                                id='date-year',
+                                className='date__year',
+                                size=100,
+                                labelPosition='bottom'
                                 )
+                ],className="date__piker__izquierda"),
+                html.Div([
+
+
+                ],className="date__piker__derecha")
+
+                ],className="date__piker")
                 ]),
         html.Br(),
         html.Div([
@@ -71,15 +94,16 @@ layout = html.Div([
                     dcc.Tab(label='Precipitación', value='tab-precipitacion'),
                     dcc.Tab(label='NDVI', value='tab-ndvi'),
                     dcc.Tab(label='Elevación', value='tab-elevacion')
-                    ],style={'align':'center'})
+                    ])
         ]),
         html.Br(),
         html.Br(),
-        html.Div([html.Div(id='out-park-tab')]),
+        html.Div(id='out-park-tab',className='out__park__tab'),
         html.Br(),
         html.Br()
 
 ])
+
 
 #--
 @callback(
@@ -111,22 +135,21 @@ def seleccion_parque(value):
         return  [html.Br(),
                 dcc.Markdown(text_park),
                 html.Br(),
-                dcc.Graph(id="graph-park", figure=graph_1, responsive=responsive, className="graph__park")
-        ]
+                dcc.Graph(id="graph-park", figure=graph_1, responsive=responsive, className="graph__park")]
         
     except:
         return """ERROR"""
-
 
 
 #--
 @callback(
     Output('out-park-tab', 'children'),
     Input('dropdown-parks', 'value'),
-    Input('date-picker', 'date'),
+    Input('date-month', 'value'),
+    Input('date-year', 'value'),
     Input('tabs-parks', 'value')
 )
-def displayClick(dropdown_parks, date_picker, tabs_parks):
+def displayClick(dropdown_parks, date_month, date_year, tabs_parks):
 
     height=600
     width=600
@@ -150,13 +173,21 @@ def displayClick(dropdown_parks, date_picker, tabs_parks):
 
     #--
     try:
-        date_object = date.fromisoformat(date_picker)\
-                        .strftime('%Y-%m')
-        periodo = str(date_object)+'-01'
+        if date_month<10:
+            month = f'0{date_month}'
+        else:
+            month = f'{date_month}'
+
+        periodo = f'{date_year}-{month}-01'
 
     except:
         return """ERROR"""
+
     
+    if periodo not in park_class.data_pandas.index.astype(str).to_list():
+        return html.H2(f"Información no disponible para el {month}-{date_year}")
+    
+
     #--
     if tabs_parks == 'tab-elevacion':
 
@@ -167,11 +198,12 @@ def displayClick(dropdown_parks, date_picker, tabs_parks):
 
 
         return  [
-            #dcc.Markdown(""""""),
-            html.Br(),
-            dcc.Markdown("""### Elevación del parque"""),
-            dcc.Graph(id="graph-elevacion", figure=graph_1,responsive=responsive)
-            ]
+                html.Div([
+                html.Br(),
+                dcc.Markdown("""### Elevación del parque"""),
+                dcc.Graph(id="graph-elevacion", figure=graph_1, responsive=responsive, className="img__espacial")
+                ])
+                ]
 
     elif tabs_parks == 'tab-precipitacion':
 
@@ -185,13 +217,16 @@ def displayClick(dropdown_parks, date_picker, tabs_parks):
                                                 height=time_height,
                                                 width=time_width)                              
 
-        return  [
-                #dcc.Markdown(""""""),
-                html.Br(),
-                dcc.Markdown("""### Precipitación espacial"""),
-                dcc.Graph(id="graph-precipitacion-espacial", figure=graph_1,responsive=responsive, className="img__precipitacion__espacial"),
-                dcc.Markdown("""### Serie temporal de la precipitación en las cuadrículas"""),
-                dcc.Graph(id="graph-precipitacion-temporal", figure=graph_2,responsive=responsive)]
+        return  [html.Div([
+                    html.Br(),
+                    dcc.Markdown("""### Precipitación espacial"""),
+                    dcc.Graph(id="graph-precipitacion-espacial", figure=graph_1,responsive=responsive)
+                    ],className="img__espacial"),
+                html.Div([
+                    dcc.Markdown("""### Serie temporal de la precipitación"""),
+                    dcc.Graph(id="graph-precipitacion-temporal", figure=graph_2,responsive=responsive)
+                    ],className="img__temporal")
+                ]
     
     elif tabs_parks =='tab-ndvi':
 
@@ -204,10 +239,14 @@ def displayClick(dropdown_parks, date_picker, tabs_parks):
                                                 height=time_height,
                                                 width=time_width) 
 
-        return  [#dcc.Markdown(""""""),
-                html.Br(),
-                dcc.Markdown("""### NDVI espacial"""),
-                dcc.Graph(id="graph-ndvi-espacial", figure=graph_1,responsive=responsive, className="img__ndvi__espacial"),
-                dcc.Markdown("""### Serie temporal del NDVI en las cuadrículas"""),
-                dcc.Graph(id="graph-ndvi-temporal", figure=graph_2,responsive=responsive)]
+        return  [html.Div([
+                    html.Br(),
+                    dcc.Markdown("""### NDVI espacial"""),
+                    dcc.Graph(id="graph-ndvi-espacial", figure=graph_1, responsive=responsive)
+                    ],className="img__espacial"),
+                html.Div([
+                    dcc.Markdown("""### Serie temporal del NDVI"""),
+                    dcc.Graph(id="graph-ndvi-temporal", figure=graph_2, responsive=responsive)
+                    ],className="img__temporal")
+                ]
                    

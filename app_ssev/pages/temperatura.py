@@ -47,6 +47,7 @@ def displayClick(tabs_temp):
     height=600
     width=900
 
+
     if tabs_temp == 'tab-sst':
 
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
@@ -64,7 +65,12 @@ def displayClick(tabs_temp):
         return [
             html.Br(),
             dcc.Markdown(text_temperatura_anomalias),
-            dcc.Graph(id="graph_anomalias", figure=graph,responsive=responsive,className='graph__anomalias'),
+            html.Div([
+                dcc.Graph(id="graph_anomalias",
+                        figure=graph,
+                        responsive=True)
+                        ],
+                    className='graph__anomalias'),
             html.Br(),
             html.Br()
         ]
