@@ -28,7 +28,7 @@ layout = html.Div([
         html.Br(),
 
         dcc.Markdown("""
-        La información es recopilada de los servidores de la NASA, Google, NOAA y Copernicus los cuales disponen, de forma gratuita, la información captada por los sensores remotos y dispositivos de teledetección. El objetivo es facilitar la data necesaria para que científicos, investigadores y desarrolladores puedan detectar cambios, mapear tendencias y cuantificar diferencias. 
+        La data es recopilada de los servidores de la NASA, Google, NOAA y Copernicus los cuales disponen, de forma gratuita, la información captada por los sensores remotos y dispositivos de teledetección. El objetivo es facilitar la data necesaria para que científicos, investigadores y desarrolladores puedan detectar cambios, mapear tendencias y cuantificar diferencias. 
         
         El proyecto SSEV surge  como iniciativa ante los fenómenos meteorológicos producto del cambio climático y el consecuente cambio global. Numerosos estudios destacan el impacto negativo de la actividad humana en los ecosistemas y señalan que, desde el punto de vista estadístico considerando la tasa actual de consumo de recursos y la estimación más optimista del crecimiento de la tasa tecnológica, la civilización tiene una probabilidad muy baja (menos del 10%) de sobrevivir sin enfrentar un colapso catastrófico. 
         """),
@@ -44,7 +44,7 @@ layout = html.Div([
         html.Br(),
 
         dcc.Markdown("""
-        Vale destacar que el estudio forma parte del Trabajo de Grado presentado a la Universidad Simon Bolivar (USB) como requisito para optar al grado académico de Doctor en Ingeniería. Se espera que los desarrollos teóricos-tecnológicos sean de utilidad en futuras investigaciones.
+        El SSEV forma parte del Trabajo de Grado presentado por Javier Martínez, bajo la tutoría de la Profesora Isabel Llatas, a la Universidad Simon Bolivar (USB) como requisito para optar al grado académico de Doctor en Ingeniería. Se espera que los desarrollos teóricos-tecnológicos sean de utilidad en futuras investigaciones.
         """),
         html.Br(),
         html.Br()

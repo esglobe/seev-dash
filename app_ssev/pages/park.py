@@ -29,7 +29,7 @@ layout = html.Div([
         dcc.Markdown("""
         # Seguimiento de parques
 
-        SSEV es una herramienta diseñada para el seguimiento de la la capa vegetal de los parques nacionales venezolanos a través del Índice de Vegetación de Diferencia Normalizada (NDVI). Con este objeto se entrenan redes neuronales para predecir la variación espacio-temporal del NDVI tomando como variable oxigena a la precipitación total.
+        EL SSEV es una herramienta diseñada para el seguimiento de la la capa vegetal de los parques nacionales venezolanos a través del Índice de Vegetación de Diferencia Normalizada (NDVI). Con este objeto se entrenan redes neuronales para predecir la variación espacio-temporal del NDVI tomando como variable oxógena a la precipitación total.
         """),
         html.Br(),
         dcc.Markdown("""
@@ -54,7 +54,7 @@ layout = html.Div([
             dcc.Markdown("""
             ## La precipitación y NDVI
 
-            Seleccione un periodo:
+            Seleccione un periodo para la visualización espacial:
             """),
             html.Br(),
             html.Div([
@@ -219,11 +219,11 @@ def displayClick(dropdown_parks, date_month, date_year, tabs_parks):
 
         return  [html.Div([
                     html.Br(),
-                    dcc.Markdown("""### Precipitación espacial"""),
+                    dcc.Markdown("""### Visión espacial de la precipitación total (milímetros)"""),
                     dcc.Graph(id="graph-precipitacion-espacial", figure=graph_1,responsive=responsive)
                     ],className="img__espacial"),
                 html.Div([
-                    dcc.Markdown("""### Serie temporal de la precipitación"""),
+                    dcc.Markdown("""### Serie temporal de la precipitación total (milímetros)"""),
                     dcc.Graph(id="graph-precipitacion-temporal", figure=graph_2,responsive=responsive)
                     ],className="img__temporal")
                 ]
@@ -241,7 +241,7 @@ def displayClick(dropdown_parks, date_month, date_year, tabs_parks):
 
         return  [html.Div([
                     html.Br(),
-                    dcc.Markdown("""### NDVI espacial"""),
+                    dcc.Markdown("""### Visión espacial del NDVI"""),
                     dcc.Graph(id="graph-ndvi-espacial", figure=graph_1, responsive=responsive)
                     ],className="img__espacial"),
                 html.Div([

@@ -54,9 +54,9 @@ app.layout = html.Div([
             html.Br(),
             html.A(html.H4("1.- Inicio",style={'color':'#FFF'}), href=dash.page_registry['pages.home']["relative_path"]),
             html.Br(),
-            html.A(html.H4("2.- Temperatura SST",style={'color':'#FFF'}), href=dash.page_registry['pages.temperatura']["relative_path"]),
+            html.A(html.H4("2.- El Niño-Oscilación del Sur",style={'color':'#FFF'}), href=dash.page_registry['pages.temperatura']["relative_path"]),
             html.Br(),
-            html.A(html.H4("3.- Parques",style={'color':'#FFF'}), href=dash.page_registry['pages.park']["relative_path"]),
+            html.A(html.H4("3.- Seguimiento de Parques",style={'color':'#FFF'}), href=dash.page_registry['pages.park']["relative_path"]),
             html.Br(),
             html.Br()
             ]),

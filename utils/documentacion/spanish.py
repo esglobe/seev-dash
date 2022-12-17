@@ -11,7 +11,7 @@ Dada la incidencia de El ENSO en los eventos climáticos globales surge la neces
 text_temperatura_anomalias = """
 ## Las anomalías SST
 
-Las anomalías SST son el resultado de la comparación entre la temperatura observada en la región El Niño 3.4 y la temperatura normal en la zona para el periodo base correspondiente (promedios mensuales de 30 años). El proceso desarrollado en SSEV utiliza los pronósticos SST alcanzados tras el entrenamiento de redes neuronales recurrentes y las temperaturas de los periodos base pautados por NOAA para predecir las anomalías SST.
+Las anomalías SST son el resultado de la comparación entre la temperatura observada en la región El Niño 3.4 y la temperatura normal en la zona para el periodo base correspondiente (promedios mensuales de 30 años). El proceso desarrollado en el SSEV utiliza los pronósticos SST y las temperaturas de los periodos base pautados por NOAA para predecir las anomalías SST.
 """
 
 text_temperatura_oni = """
@@ -27,7 +27,7 @@ El ONI es el principal índice utilizado por NOAA en el seguimiento de EL ENSO. 
 text_park_cerro_saroche = """
 ## Parque Cerro Saroche
 
-El Parque Nacional Cerro Saroche se encuentra ubicado entre los municipios Iribarren, Torres y Jiménez del Estado Lara. Dispone de más de 32 mil hectáreas y fue creado por Decreto Nº 637 del 07 de diciembre de 1989 y publicado en la Gaceta Oficial Extraordinaria Nº 34.544 de fecha 03 de septiembre de 1990. Desde el punto de vista geográfico, el parque es una depresión rodeada por un sistema montañoso que funciona como una barrera natural para los vientos que fluyen en direcciones diversas, lo que genera un clima árido predominante en el área. Las temperaturas oscilan entre 22 y 28 grados Celsius y la distribución de lluvias es irregular y efímera.
+El Parque Nacional Cerro Saroche dispone de más de 32 mil hectáreas y se encuentra ubicado entre los municipios Iribarren, Torres y Jiménez del Estado Lara. Desde el punto de vista geográfico, el parque es una depresión rodeada por un sistema montañoso que funciona como una barrera natural para los vientos que fluyen en direcciones diversas, lo que genera un clima árido predominante en el área. Las temperaturas oscilan entre 22 y 28 grados Celsius y la distribución de lluvias es irregular y efímera.
 
 La vegetación del Cerro Saroche corresponde con la de tipo xerófito (vegetación con vida en medio seco), donde predominan cardonales, espinares y matorrales. Se observan árboles de cují, yabo, cotoperí, vera y guayacán. En cuanto a la fauna, es común la presencia del báquiro, el zorro, el oso hormiguero, cunaguaro y al gato montés. En cuanto a las aves, predomina el turpial, la paraulata, el cardenalito, el perico cara sucia y la guacharaca. También, se pueden encontrar reptiles como la cascabel y la coral, además de lagartos como la iguana y el mato.
 """
@@ -35,7 +35,7 @@ La vegetación del Cerro Saroche corresponde con la de tipo xerófito (vegetaci�
 text_park_terepaima = """
 ## Parque Terepaima
 
-El parque Terepaima es declarado Parque Nacional bajo el Decreto Nº 1.519 de fecha 14 de abril de 1976 publicado en Gaceta Oficial Nº 31.000 de fecha 10 de junio del 1976 con el fin de resguardar los recursos hídricos y la biodiversidad de la región montañosa de los Estados Lara y Portuguesa. En él nace el río Sarare que alimenta al embalse de Las Majaguas, de gran importancia para el desarrollo agrícola e industrial. Está ubicado al sureste de Barquisimeto y cuenta con más de 18 mil hectáreas. El norte del parque contrasta un paisaje con vegetación predominantemente xerofítica (plantas adaptadas a un clima seco) mientras que desde los 500 hasta los 700 metros de altitud predominan los bosques semideciduos (sus especies arbóreas dominantes pierden entre 25% y 75% del follaje durante la época de sequía) y en menor grado, los herbazales (pastizales) de sabana. 
+El parque Terepaima es declarado Parque Nacional con el fin de resguardar los recursos hídricos y la biodiversidad de la región montañosa de los Estados Lara y Portuguesa. En él nace el río Sarare que alimenta al embalse de Las Majaguas, de gran importancia para el desarrollo agrícola e industrial. Está ubicado al sureste de Barquisimeto y cuenta con más de 18 mil hectáreas. El norte del parque contrasta un paisaje con vegetación predominantemente xerofítica (plantas adaptadas a un clima seco) mientras que desde los 500 hasta los 700 metros de altitud predominan los bosques semideciduos (sus especies arbóreas dominantes pierden entre 25% y 75% del follaje durante la época de sequía) y en menor grado, los herbazales (pastizales) de sabana. 
 
 El clima en Terepaima es predominantemente fresco, con una temperatura promedio de 19 a 26 grados Celsius y la precipitación anual media varía entre 800 y 2000 milímetros. En la región es usual observar árboles de nogal, así como al araguato, el auyamo, el laurel amarillo, el roble, el jebe, entre otros. Vale destacar que este parque es el habitad del oso frontino y del jaguar los cuales se encuentran en peligro de extinción.
 """
