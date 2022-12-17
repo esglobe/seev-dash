@@ -1,8 +1,11 @@
+import os
 import dash
 from dash import dcc, html, Input, Output, ctx, callback
 
 from utils.TEMPERATURA import *
+from utils.documentacion.spanish import *
 
+responsive = True
 
 dash.register_page(
     __name__,
@@ -17,49 +20,78 @@ temperatura.get_data()
 
 #--
 layout = html.Div([
-        html.H2(children=f"Temperatura promedio en la superficie del mar (SST)"),
-        html.H3(children=f"Región El Niño 3.4"),
-        html.Div([
-            html.Button('SST', id='btn-nclicks-1', n_clicks=0),
-            html.Button('Anomalías de SST', id='btn-nclicks-2', n_clicks=0),
-            html.Button('ONI', id='btn-nclicks-3', n_clicks=0),
-        ],className="btn-gruo-oni"),
-        
-        html.Div([html.Div(id='container-button-timestamp')]),
 
-        html.Div([
-            
-            html.Div(children="""Dash: A web application framework for your data.""")
-            
-        ])
+        dcc.Markdown("""
+        # El Niño-Oscilación del Sur (ENSO)
+
+        El Niño-Oscilación del Sur, es un fenómeno natural caracterizado por la fluctuación de las temperaturas del océano en la parte central y oriental del Pacífico ecuatorial, asociada a cambios en la atmósfera. El ENSO debe su nombre a sus componentes oceánicas (El Niño y La Niña) y atmosférica (Oscilación del Sur) y es uno de los fenómenos climáticos de mayor influencia a nivel global. El mismo, está relacionado con las anomalías interanuales de las precipitaciones que pueden verse reflejadas en largas sequias o fuertes lluvias. Específicamente, en los países andinos el fenómeno de El Niño causa extensas inundaciones en las zonas costeras de Ecuador, del norte del Perú y el oriente de Bolivia. Al mismo tiempo, produce sequías en todo el altiplano boliviano-peruano y déficits de lluvias en Colombia y Venezuela.
+        """),
+        html.Br(),
+        html.Br(),
+        dcc.Tabs(id="tabs-temp", value='tab-sst', 
+            children=[dcc.Tab(label='SST', value='tab-sst'),
+                    dcc.Tab(label='Anomalías de SST', value='tab-anomalias'),
+                    dcc.Tab(label='ONI', value='tab-oni')
+                ]),
+
+        html.Div([html.Div(id='out-tab-temp')],className='out__tab__temp')
 ])
 
 
 @callback(
-    Output('container-button-timestamp', 'children'),
-    Input('btn-nclicks-1', 'n_clicks'),
-    Input('btn-nclicks-2', 'n_clicks'),
-    Input('btn-nclicks-3', 'n_clicks')
+    Output('out-tab-temp', 'children'),
+    Input('tabs-temp', 'value')
 )
-def displayClick(btn1, btn2, btn3):
+def displayClick(tabs_temp):
 
-    height=750
-    width=1150
+    height=600
+    width=900
 
-    if "btn-nclicks-1" == ctx.triggered_id:
+
+    if tabs_temp == 'tab-sst':
 
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            html.Br(),
+            dcc.Markdown(text_temperatura_sst),
+            dcc.Graph(id="graph_sst", figure=graph,responsive=responsive,className='graph__sst'),
+            html.Br(),
+            html.Br()
+            ]
 
-    elif "btn-nclicks-2" == ctx.triggered_id:
+    elif tabs_temp == 'tab-anomalias':
 
         graph = temperatura.temperatura_sst(serie='anomalias', height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            html.Br(),
+            dcc.Markdown(text_temperatura_anomalias),
+            html.Div([
+                dcc.Graph(id="graph_anomalias",
+                        figure=graph,
+                        responsive=True)
+                        ],
+                    className='graph__anomalias'),
+            html.Br(),
+            html.Br()
+        ]
 
-    elif "btn-nclicks-3" == ctx.triggered_id:
+    elif tabs_temp == 'tab-oni':
         graph = temperatura.temperatura_oni(height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            html.Br(),
+            dcc.Markdown(text_temperatura_oni),
+            dcc.Graph(id="graph_oni", figure=graph,responsive=responsive,className='graph__oni'),
+            html.Br(),
+            html.Br()
+        ]
     
     else:
         graph = temperatura.temperatura_sst(serie='nino34_mean', height=height, width=width)
-        return dcc.Graph(id="example-graph", figure=graph)
+        return [
+            html.Br(),
+            dcc.Markdown("""ERROR"""),
+            html.Br(),
+            dcc.Graph(id="example-graph", figure=graph,responsive=responsive),
+            html.Br(),
+            dcc.Markdown("""ERROR""")
+        ]

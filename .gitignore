@@ -4,5 +4,4 @@ __pycache__
 /app/__pycache__
 /app/utils/__pycache__
 .env
-test_mongo.ipynb
-t3est_1.py
+viejo_code
