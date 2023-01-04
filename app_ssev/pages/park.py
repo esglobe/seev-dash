@@ -29,7 +29,7 @@ layout = html.Div([
         dcc.Markdown("""
         # Seguimiento de parques
 
-        EL SSEV es una herramienta diseñada para el seguimiento de la la capa vegetal de los parques nacionales venezolanos a través del Índice de Vegetación de Diferencia Normalizada (NDVI). Con este objeto se entrenan redes neuronales para predecir la variación espacio-temporal del NDVI tomando como variable oxógena a la precipitación total.
+        EL SSEV es una herramienta diseñada para el seguimiento de la capa vegetal de los parques nacionales venezolanos a través del Índice de Vegetación de Diferencia Normalizada (NDVI). Con este objeto se entrenan redes neuronales para predecir la variación espacio-temporal del NDVI tomando como variable exógena a la precipitación total.
         """),
         html.Br(),
         dcc.Markdown("""
