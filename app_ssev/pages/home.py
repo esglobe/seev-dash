@@ -44,7 +44,7 @@ layout = html.Div([
         html.Br(),
 
         dcc.Markdown("""
-        El SSEV forma parte del Trabajo de Grado presentado por Javier Martínez, bajo la tutoría de la Profesora Isabel Llatas, a la Universidad Simon Bolivar (USB) como requisito para optar al grado académico de Doctor en Ingeniería. Se espera que los desarrollos teóricos-tecnológicos sean de utilidad en futuras investigaciones.
+        El SSEV forma parte de la Tesis Doctoral presentada por Javier Martínez, bajo la tutoría de la Profesora Isabel Llatas, a la Universidad Simón Bolívar (USB) como requisito para optar al grado académico de Doctor en Ingeniería. Se espera que los desarrollos teóricos-tecnológicos sean de utilidad en futuras investigaciones.
         """),
         html.Br(),
         html.Br()
