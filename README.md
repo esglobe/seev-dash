@@ -29,6 +29,6 @@ El SSEV es desarrollado con Dash de Python y sigue la siguiente estructura:
     └─ server_conf.py
 ~~~
 
-En *app_ssev* se encuientra la App desarrollada con Dash mientras que en *utils* se disponen de los módulos Python neccesarios para la conexión a MongoDB, trtatamiento de la información y generación de gráficos. 
+En *app_ssev* se encuientra la App desarrollada con Dash mientras que en *utils* se disponen de los módulos Python necesarios para la conexión a MongoDB, tratamiento de la información y generación de gráficos. 
 
 En el directorio *ssev-dash* se dispone del *Dokerfile* para la creacion de la imagen Docker. En el desarrollo de la plataforma se ha utilizado Docker Compose (docker-compose.yaml). Mientras que el deploy es realizado heroku (ver heroku.yaml)
