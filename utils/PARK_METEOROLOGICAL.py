@@ -9,6 +9,8 @@ import plotly.graph_objects as go
 import numpy as np
 import math
 
+import os
+
 from utils.MONGO import CONEXION
 
 class PARK_METEOROLOGICAL:
@@ -340,15 +342,18 @@ class PARK_METEOROLOGICAL:
 
       centroide = self.park_poligono.geometry[0].centroid.coords.xy
 
+      print(os.environ['MAPBOX_TOKEN'])
+
       fig = go.Figure(go.Scattermapbox(
           mode = "markers",
           lon = [centroide[1][0]], lat = [centroide[0][0]],
           marker = {'size': 20, 'color': ["cyan"]}))
 
       fig.update_layout(
-          mapbox_style="white-bg",
+        #   mapbox_style="white-bg",
           mapbox = {
-              'style': "stamen-terrain",
+            'accesstoken' : os.environ['MAPBOX_TOKEN'],
+            #   'style': "stamen-terrain",
               'center': { 'lon': centroide[0][0], 'lat': centroide[1][0]},
               'zoom': 9, 'layers': [{
                   'source': self.polygons[0]['polygons']['polygon'],
