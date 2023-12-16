@@ -342,7 +342,6 @@ class PARK_METEOROLOGICAL:
 
       centroide = self.park_poligono.geometry[0].centroid.coords.xy
 
-      print(os.environ['MAPBOX_TOKEN'])
 
       fig = go.Figure(go.Scattermapbox(
           mode = "markers",
